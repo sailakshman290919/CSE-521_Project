@@ -252,7 +252,7 @@ def main():
                 print("Invalid command. Type 'help' for commands.")
 
     except SystemExit:
-        pass  # Catch and ignore the SystemExit exception
+        pass  
 
 if __name__ == "__main__":
     main()
