@@ -1,0 +1,155 @@
+import sys
+
+class Student:
+    def __init__(self, student_id, name, age, gender, contact):
+        self.student_id = student_id
+        self.name = name
+        self.age = age
+        self.gender = gender
+        self.contact = contact
+
+    def display_details(self):
+        print(f"Student ID: {self.student_id}")
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
+        print(f"Gender: {self.gender}")
+        print(f"Contact: {self.contact}")
+        print()
+
+class Course:
+    def __init__(self, course_code, course_name, max_capacity):
+        self.course_code = course_code
+        self.course_name = course_name
+        self.max_capacity = max_capacity
+        self.current_enrollment = 0
+
+    def display_details(self):
+        print(f"Course Code: {self.course_code}")
+        print(f"Course Name: {self.course_name}")
+        print(f"Max Capacity: {self.max_capacity}")
+        print(f"Current Enrollment: {self.current_enrollment}")
+        print()
+
+class Grade:
+    def __init__(self, student, course, grade):
+        self.student = student
+        self.course = course
+        self.grade = grade
+
+    def display_details(self):
+        print(f"Student: {self.student.name}")
+        print(f"Course: {self.course.course_name}")
+        print(f"Grade: {self.grade}")
+        print()
+
+class CommandParser:
+    @staticmethod
+    def parse_command(user_input):
+        return user_input.lower().split()
+
+class UserInterface:
+    @staticmethod
+    def print_help():
+        print("Student Information System (SIS)")
+        print("Commands:")
+        print("  enroll <student_id> <course_code>: Enroll a student in a course")
+        print("  display students: Display details of all students")
+        print("  display courses: Display details of all courses")
+        print("  display grades: Display grades of all students")
+        print("  help: Display this help message")
+        print("  exit: Exit the program")
+
+class EnrollmentSystem:
+    @staticmethod
+    def enroll_student(student, course):
+        if course.current_enrollment < course.max_capacity:
+            grade = Grade(student, course, "N/A")
+            student_db.add_grade(grade)
+            print(f"{student.name} enrolled in {course.course_name}.")
+        else:
+            print("Course is full. Enrollment failed.")
+
+class StudentDatabase:
+    def __init__(self):
+        self.students = []
+        self.courses = []
+        self.grades = []
+
+    def add_student(self, student):
+        self.students.append(student)
+
+    def add_course(self, course):
+        self.courses.append(course)
+
+    def add_grade(self, grade):
+        self.grades.append(grade)
+        grade.course.current_enrollment += 1
+
+    def display_student_details(self):
+        for student in self.students:
+            student.display_details()
+
+    def display_course_details(self):
+        for course in self.courses:
+            course.display_details()
+
+    def display_grades(self):
+        for grade in self.grades:
+            grade.display_details()
+
+def main():
+    student_db = StudentDatabase()
+
+    # Sample Data
+    student1 = Student(1, "John Doe", 20, "Male", "123-456-7890")
+    student2 = Student(2, "Jane Smith", 22, "Female", "987-654-3210")
+    student_db.add_student(student1)
+    student_db.add_student(student2)
+
+    course1 = Course("CS101", "Introduction to Programming", 30)
+    course2 = Course("MATH201", "Calculus", 25)
+    student_db.add_course(course1)
+    student_db.add_course(course2)
+
+    while True:
+        user_input = input("Enter a command (type 'help' for commands): ")
+        
+        if not user_input:
+            continue
+
+        command = CommandParser.parse_command(user_input)
+
+        if command[0] == 'enroll' and len(command) == 3:
+            student_id = int(command[1])
+            course_code = command[2]
+            student = next((s for s in student_db.students if s.student_id == student_id), None)
+            course = next((c for c in student_db.courses if c.course_code == course_code), None)
+            
+            if student and course:
+                EnrollmentSystem.enroll_student(student, course)
+            else:
+                print("Invalid student ID or course code.")
+
+        elif command[0] == 'display' and len(command) == 2:
+            option = command[1]
+            if option == 'students':
+                student_db.display_student_details()
+            elif option == 'courses':
+                student_db.display_course_details()
+            elif option == 'grades':
+                student_db.display_grades()
+            else:
+                print("Invalid display option.")
+
+        elif command[0] == 'help':
+            UserInterface.print_help()
+
+        elif command[0] == 'exit':
+            print("Exiting the program. Goodbye!")
+            sys.exit()
+
+        else:
+            print("Invalid command. Type 'help' for commands.")
+
+if __name__ == "__main__":
+    main()
