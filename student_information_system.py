@@ -3,14 +3,14 @@ import sys
 # Define the Student class
 class Student:
     def __init__(self, student_id, name, age, gender, contact):
-        # Step 1: Initialize student attributes
+        #Initialize student attributes
         self.student_id = student_id
         self.name = name
         self.age = age
         self.gender = gender
         self.contact = contact
 
-    # Step 2: Display student details
+    #Display student details
     def display_details(self):
         print(f"Student ID: {self.student_id}")
         print(f"Name: {self.name}")
@@ -22,13 +22,13 @@ class Student:
 # Define the Course class
 class Course:
     def __init__(self, course_code, course_name, max_capacity):
-        # Step 3: Initialize course attributes
+        #Initialize course attributes
         self.course_code = course_code
         self.course_name = course_name
         self.max_capacity = max_capacity
         self.current_enrollment = 0
 
-    # Step 4: Display course details
+    #Display course details
     def display_details(self):
         print(f"Course Code: {self.course_code}")
         print(f"Course Name: {self.course_name}")
@@ -39,12 +39,12 @@ class Course:
 # Define the Grade class
 class Grade:
     def __init__(self, student, course, grade):
-        # Step 5: Initialize grade attributes
+        #Initialize grade attributes
         self.student = student
         self.course = course
         self.grade = grade
 
-    # Step 6: Display grade details
+    #Display grade details
     def display_details(self):
         print(f"Student: {self.student.name}")
         print(f"Course: {self.course.course_name}")
@@ -68,7 +68,7 @@ class UserInterface:
 # Define the EnrollmentSystem class
 class EnrollmentSystem:
     def enroll_student(self, student_id, course_code):
-        # Step 9: Enroll a student in a course
+        # Enroll a student in a course
         student = next((s for s in student_db.students if s.student_id == student_id), None)
         course = next((c for c in student_db.courses if c.course_code == course_code), None)
 
@@ -78,7 +78,7 @@ class EnrollmentSystem:
             print("Invalid student ID or course code.")
 
     def enroll(self, student, course):
-        # Step 10: Enroll a student in a course and update enrollment count
+        #Enroll a student in a course and update enrollment count
         if course.current_enrollment < course.max_capacity:
             grade = Grade(student, course, "N/A")
             student_db.add_grade(grade)
