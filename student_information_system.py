@@ -1,13 +1,16 @@
 import sys
 
+# Define the Student class
 class Student:
     def __init__(self, student_id, name, age, gender, contact):
+        # Step 1: Initialize student attributes
         self.student_id = student_id
         self.name = name
         self.age = age
         self.gender = gender
         self.contact = contact
 
+    # Step 2: Display student details
     def display_details(self):
         print(f"Student ID: {self.student_id}")
         print(f"Name: {self.name}")
@@ -16,13 +19,16 @@ class Student:
         print(f"Contact: {self.contact}")
         print()
 
+# Define the Course class
 class Course:
     def __init__(self, course_code, course_name, max_capacity):
+        # Step 3: Initialize course attributes
         self.course_code = course_code
         self.course_name = course_name
         self.max_capacity = max_capacity
         self.current_enrollment = 0
 
+    # Step 4: Display course details
     def display_details(self):
         print(f"Course Code: {self.course_code}")
         print(f"Course Name: {self.course_name}")
@@ -30,53 +36,49 @@ class Course:
         print(f"Current Enrollment: {self.current_enrollment}")
         print()
 
+# Define the Grade class
 class Grade:
     def __init__(self, student, course, grade):
+        # Step 5: Initialize grade attributes
         self.student = student
         self.course = course
         self.grade = grade
 
+    # Step 6: Display grade details
     def display_details(self):
         print(f"Student: {self.student.name}")
         print(f"Course: {self.course.course_name}")
         print(f"Grade: {self.grade}")
         print()
 
+# Define the CommandParser class
 class CommandParser:
-    @staticmethod
-    def parse_command(user_input):
+    def parse_command(self, user_input):
+        # Step 7: Parse user input into a list of command components
         return user_input.lower().split()
 
+# Define the UserInterface class
 class UserInterface:
-    @staticmethod
-    def print_help():
+    def print_help(self):
+        # Step 8: Display help message with available commands
         print("Student Information System (SIS)")
         print("Commands:")
-        print("  enroll <student_id> <course_code>: Enroll a student in a course")
-        print("  add student <name> <age> <gender> <contact>: Add a new student")
-        print("  add course <course_code> <course_name> <max_capacity>: Add a new course")
-        print("  add grade <student_id> <course_code> <grade>: Add a grade for a student")
-        print("  remove student <student_id>: Remove a student")
-        print("  remove course <course_code>: Remove a course")
-        print("  display students: Display details of all students")
-        print("  display courses: Display details of all courses")
-        print("  display grades: Display grades of all students")
-        print("  help: Display this help message")
-        print("  exit: Exit the program")
+        # ... (list of commands)
 
+# Define the EnrollmentSystem class
 class EnrollmentSystem:
-    @staticmethod
-    def enroll_student(student_id, course_code):
+    def enroll_student(self, student_id, course_code):
+        # Step 9: Enroll a student in a course
         student = next((s for s in student_db.students if s.student_id == student_id), None)
         course = next((c for c in student_db.courses if c.course_code == course_code), None)
 
         if student and course:
-            EnrollmentSystem.enroll(student, course)
+            self.enroll(student, course)
         else:
             print("Invalid student ID or course code.")
 
-    @staticmethod
-    def enroll(student, course):
+    def enroll(self, student, course):
+        # Step 10: Enroll a student in a course and update enrollment count
         if course.current_enrollment < course.max_capacity:
             grade = Grade(student, course, "N/A")
             student_db.add_grade(grade)
@@ -85,21 +87,18 @@ class EnrollmentSystem:
         else:
             print("Course is full. Enrollment failed.")
 
-    @staticmethod
-    def add_student(name, age, gender, contact):
+    def add_student(self, name, age, gender, contact):
         student_id = len(student_db.students) + 1
         student = Student(student_id, name, age, gender, contact)
         student_db.add_student(student)
         print(f"Student {name} added with ID {student_id}.")
 
-    @staticmethod
-    def add_course(course_code, course_name, max_capacity):
+    def add_course(self, course_code, course_name, max_capacity):
         course = Course(course_code, course_name, max_capacity)
         student_db.add_course(course)
         print(f"Course {course_name} added with code {course_code}.")
 
-    @staticmethod
-    def add_grade(student_id, course_code, grade):
+    def add_grade(self, student_id, course_code, grade):
         student = next((s for s in student_db.students if s.student_id == student_id), None)
         course = next((c for c in student_db.courses if c.course_code == course_code), None)
 
@@ -110,8 +109,7 @@ class EnrollmentSystem:
         else:
             print("Invalid student ID or course code.")
 
-    @staticmethod
-    def remove_student(student_id):
+    def remove_student(self, student_id):
         student = next((s for s in student_db.students if s.student_id == student_id), None)
         if student:
             student_db.remove_student(student)
@@ -119,8 +117,7 @@ class EnrollmentSystem:
         else:
             print("Invalid student ID.")
 
-    @staticmethod
-    def remove_course(course_code):
+    def remove_course(self, course_code):
         course = next((c for c in student_db.courses if c.course_code == course_code), None)
         if course:
             student_db.remove_course(course)
@@ -128,6 +125,7 @@ class EnrollmentSystem:
         else:
             print("Invalid course code.")
 
+# Define the StudentDatabase class
 class StudentDatabase:
     def __init__(self):
         self.students = []
@@ -178,60 +176,94 @@ class StudentDatabase:
             for grade in self.grades:
                 grade.display_details()
 
+# Instantiate the student database globally
+student_db = StudentDatabase()
+
+# Define the CommandParser class
+class CommandParser:
+    def parse_command(self, user_input):
+        return user_input.lower().split()
+
+# Define the UserInterface class
+class UserInterface:
+    def print_help(self):
+        print("Student Information System (SIS)")
+        print("Commands:")
+        print("  enroll <student_id> <course_code>: Enroll a student in a course")
+        print("  add student <name> <age> <gender> <contact>: Add a new student")
+        print("  add course <course_code> <course_name> <max_capacity>: Add a new course")
+        print("  add grade <student_id> <course_code> <grade>: Add a grade for a student")
+        print("  remove student <student_id>: Remove a student")
+        print("  remove course <course_code>: Remove a course")
+        print("  display students: Display details of all students")
+        print("  display courses: Display details of all courses")
+        print("  display grades: Display grades of all students")
+        print("  help: Display this help message")
+        print("  exit: Exit the program")
+
+#Define the main function
 def main():
-    global student_db
-    student_db = StudentDatabase()
+    #Create instances of the classes
+    command_parser = CommandParser()
+    user_interface = UserInterface()
+    enrollment_system = EnrollmentSystem()
 
     try:
         while True:
+            # Get user input
             user_input = input("Enter a command (type 'help' for commands): ")
 
             if not user_input:
                 continue
 
-            command = CommandParser.parse_command(user_input)
+            #Parse user input and execute corresponding command
+            command = command_parser.parse_command(user_input)
 
             if command[0] == 'enroll' and len(command) == 3:
+                #Enroll a student in a course based on user input
                 try:
                     student_id = int(command[1])
                     course_code = command[2]
-                    EnrollmentSystem.enroll_student(student_id, course_code)
+                    enrollment_system.enroll_student(student_id, course_code)
                 except ValueError:
                     print("Invalid input. Please enter a valid student ID.")
                 except IndexError:
                     print("Invalid input format. Please follow the correct format: enroll <student_id> <course_code>")
-
+                
             elif command[0] == 'add' and len(command) > 3:
+                # Process 'add' commands for adding students, courses, or grades
                 try:
                     if command[1] == 'student' and len(command) == 6:
                         name, age, gender, contact = command[2], int(command[3]), command[4], command[5]
-                        EnrollmentSystem.add_student(name, age, gender, contact)
+                        enrollment_system.add_student(name, age, gender, contact)
                     elif command[1] == 'course' and len(command) >= 5:
                         course_code, course_name = command[2], ' '.join(command[3:-1])
                         max_capacity = int(command[-1])
-                        EnrollmentSystem.add_course(course_code, course_name, max_capacity)
+                        enrollment_system.add_course(course_code, course_name, max_capacity)
                     elif command[1] == 'grade' and len(command) == 5:
                         student_id, course_code, grade = int(command[2]), command[3], command[4]
-                        EnrollmentSystem.add_grade(student_id, course_code, grade)
+                        enrollment_system.add_grade(student_id, course_code, grade)
                     else:
                         print("Invalid 'add' command or incorrect number of arguments.")
                 except ValueError:
                     print("Invalid input. Please check the provided values.")
 
             elif command[0] == 'remove' and len(command) == 3:
+                # Process 'remove' commands for removing students or courses
                 try:
                     if command[1] == 'student':
                         student_id = int(command[2])
-                        EnrollmentSystem.remove_student(student_id)
+                        enrollment_system.remove_student(student_id)
                     elif command[1] == 'course':
                         course_code = command[2]
-                        EnrollmentSystem.remove_course(course_code)
+                        enrollment_system.remove_course(course_code)
                     else:
                         print("Invalid 'remove' command. Use 'remove student <student_id>' or 'remove course <course_code>'.")
                 except ValueError:
                     print("Invalid input. Please enter a valid student ID or course code.")
 
             elif command[0] == 'display' and len(command) == 2:
+                #Process 'display' commands for displaying student details, course details, or grades
                 if command[1] == 'students':
                     student_db.display_student_details()
                 elif command[1] == 'courses':
@@ -242,17 +274,21 @@ def main():
                     print("Invalid 'display' command. Use 'display students', 'display courses', or 'display grades'.")
 
             elif command[0] == 'help':
-                UserInterface.print_help()
+                #Display help message
+                user_interface.print_help()
 
             elif command[0] == 'exit':
+                #Exit the program
                 print("Exiting the program. Goodbye!")
                 sys.exit()
 
             else:
+                #Handle invalid commands
                 print("Invalid command. Type 'help' for commands.")
 
     except SystemExit:
-        pass  
+        pass
 
+#Run the main function if the script is executed
 if __name__ == "__main__":
     main()
