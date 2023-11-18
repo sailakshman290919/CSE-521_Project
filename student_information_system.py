@@ -54,13 +54,13 @@ class Grade:
 # Define the CommandParser class
 class CommandParser:
     def parse_command(self, user_input):
-        # Step 7: Parse user input into a list of command components
+        #  Parse user input into a list of command components
         return user_input.lower().split()
 
 # Define the UserInterface class
 class UserInterface:
     def print_help(self):
-        # Step 8: Display help message with available commands
+        #  Display help message with available commands
         print("Student Information System (SIS)")
         print("Commands:")
         # ... (list of commands)
@@ -182,6 +182,7 @@ student_db = StudentDatabase()
 # Define the CommandParser class
 class CommandParser:
     def parse_command(self, user_input):
+        #Parse user input into a list of command components
         return user_input.lower().split()
 
 # Define the UserInterface class
